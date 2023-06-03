@@ -6,7 +6,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class Differ {
     public static String generate(String path1, String path2) throws IOException {
@@ -14,8 +18,8 @@ public class Differ {
         String data2 = getData(path2);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> dataMap1 = objectMapper.readValue(data1, new TypeReference<>(){});
-        Map<String, Object> dataMap2 = objectMapper.readValue(data2, new TypeReference<>(){});
+        Map<String, Object> dataMap1 = objectMapper.readValue(data1, new TypeReference<>() { });
+        Map<String, Object> dataMap2 = objectMapper.readValue(data2, new TypeReference<>() { });
 
         TreeMap<String, Map<String, Object>> difference = getDifference(dataMap1, dataMap2);
         return format(difference);
@@ -32,7 +36,7 @@ public class Differ {
             } else if (elementInfo.get("status").equals("changed")) {
                 result.append("  - ").append(key).append(": ").append(elementInfo.get("oldValue")).append("\n");
                 result.append("  + ").append(key).append(": ").append(elementInfo.get("newValue")).append("\n");
-            } else if (elementInfo.get("status").equals("same")) {
+            } else {
                 result.append("    ").append(key).append(": ").append(elementInfo.get("value")).append("\n");
             }
         }
