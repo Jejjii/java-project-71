@@ -1,0 +1,38 @@
+name: hexlet-check
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - uses: actions/checkout@v3
+    
+    - name: Setup Java
+    - uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+        
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+      	arguments: build
+      	build-root-directory: app
+      	
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v4.0.0
+      env:
+      CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
+    with:
+      # The report file must be there, otherwise Code Climate won't find it
+      coverageCommand: make test
+      coverageLocations: ${{github.workspace}}/app/build/report/jacoco/test/jacocoTestReport.xml:jacoco

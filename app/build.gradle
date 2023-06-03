@@ -25,6 +25,12 @@ jacoco {
     toolVersion = "0.8.8"
 }
 
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
+
 dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     implementation 'info.picocli:picocli:4.7.3'
