@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class JSONFormatter implements Formatter {
+public final class JSONFormatter implements Formatter {
     @Override
     public String format(TreeMap<String, Map<String, Object>> data) {
         ObjectMapper writer = new ObjectMapper();

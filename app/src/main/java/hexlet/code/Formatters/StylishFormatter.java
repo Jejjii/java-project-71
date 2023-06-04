@@ -3,7 +3,7 @@ package hexlet.code.Formatters;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class StylishFormatter implements Formatter {
+public final class StylishFormatter implements Formatter {
 
     @Override
     public String format(TreeMap<String, Map<String, Object>> data) {
