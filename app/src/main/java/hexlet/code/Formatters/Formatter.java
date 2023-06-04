@@ -13,6 +13,9 @@ public interface Formatter {
             case "plain" -> {
                 return new PlainFormatter();
             }
+            case "json" -> {
+                return new JSONFormatter();
+            }
             default -> throw new RuntimeException("Unsupported format");
         }
     }
