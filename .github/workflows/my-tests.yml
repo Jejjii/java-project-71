@@ -18,7 +18,8 @@ jobs:
         with:
           arguments: build
           build-root-directory: app
-      - run: make run-dist
+      - run: make install
+      - run: make build
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v4.0.0
         env:
