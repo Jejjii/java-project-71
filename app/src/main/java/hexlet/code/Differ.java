@@ -24,6 +24,10 @@ public class Differ {
         return Formatter.createFormatter(style).format(difference);
     }
 
+    public static String generate(String path1, String path2) throws IOException {
+        return generate(path1, path2, "stylish");
+    }
+
     private static String getData(String path) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)));
     }
