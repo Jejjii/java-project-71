@@ -1,8 +1,5 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,14 +9,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Differ { //aboba
+public class Differ {
     public static String generate(String path1, String path2) throws IOException {
         String data1 = getData(path1);
         String data2 = getData(path2);
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> dataMap1 = objectMapper.readValue(data1, new TypeReference<>() { });
-        Map<String, Object> dataMap2 = objectMapper.readValue(data2, new TypeReference<>() { });
+        Map<String, Object> dataMap1 = Parser.parseData(getExtension(path1), data1);
+        Map<String, Object> dataMap2 = Parser.parseData(getExtension(path2), data2);
 
         TreeMap<String, Map<String, Object>> difference = getDifference(dataMap1, dataMap2);
         return format(difference);
@@ -45,6 +41,11 @@ public class Differ { //aboba
 
     private static String getData(String path) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)));
+    }
+
+    private static String getExtension(String path) {
+        String[] temp = path.split("\\.");
+        return temp[temp.length - 1];
     }
 
     private static TreeMap<String, Map<String, Object>> getDifference(Map<String, Object> map1,
