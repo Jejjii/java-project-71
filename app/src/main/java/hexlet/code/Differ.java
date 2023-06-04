@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import hexlet.code.Formatters.Formatter;
-import hexlet.code.Formatters.StylishFormatter;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,15 +21,11 @@ public class Differ {
         Map<String, Object> dataMap2 = Parser.parseData(getExtension(path2), data2);
 
         TreeMap<String, Map<String, Object>> difference = getDifference(dataMap1, dataMap2);
-        return createFormatter(style).format(difference);
+        return Formatter.createFormatter(style).format(difference);
     }
 
     private static String getData(String path) throws IOException {
         return new String(Files.readAllBytes(Paths.get(path)));
-    }
-
-    private static Formatter createFormatter(String style) {
-        return new StylishFormatter();
     }
 
     private static String getExtension(String path) {
