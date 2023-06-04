@@ -18,11 +18,12 @@ jobs:
         with:
           arguments: build
           build-root-directory: app
+      - run: make run-dist
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v4.0.0
         env:
           CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
           JACOCO_SOURCE_PATH: "${{github.workspace}}/app/src/main/java"
         with:
-          coverageCommand: make test
+          coverageCommand: make report
           coverageLocations: ${{github.workspace}}/app/build/report/jacoco/test/jacocoTestReport.xml:jacoco
