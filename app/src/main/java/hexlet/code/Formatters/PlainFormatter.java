@@ -1,7 +1,6 @@
 package hexlet.code.Formatters;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -42,9 +41,9 @@ public final class PlainFormatter implements Formatter {
         if (value == null) {
             return String.valueOf((Object) null);
         }
-        if (value.getClass().equals(ArrayList.class) || value.getClass().equals(LinkedHashMap.class)) {
+        if (value instanceof List<?> || value instanceof Map<?, ?>) {
             return "[complex value]";
-        } else if (value.getClass().equals(String.class)) {
+        } else if (value instanceof String) {
             return "'" + value + "'";
         } else {
             return String.valueOf(value);
