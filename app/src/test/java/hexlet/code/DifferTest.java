@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import org.assertj.core.api.Assertions;
 
 public class DifferTest {
     private final String json1 = "src/test/resources/json1.json";
@@ -59,8 +60,16 @@ public class DifferTest {
     }
 
     @Test
+    void diffTestYml() throws IOException {
+        String yml1 = "src/test/resources/yml1.yml";
+        String yml2 = "src/test/resources/yml2.yml";
+        assertThat(Differ.generate(yml1, yml2, "stylish")).isEqualTo(result);
+    }
+
+    @Test
     void diffTestExtensions() throws IOException {
         assertThat(Differ.generate(json1, yaml2, "stylish")).isEqualTo(result);
+        assertThat(Differ.generate(yaml1, json2, "stylish")).isEqualTo(result);
     }
 
     @Test
@@ -159,5 +168,15 @@ public class DifferTest {
                   }
                 }""";
         assertThat(Differ.generate(json1, json2, "json")).isEqualTo(resultJson);
+    }
+
+    @Test
+    void diffTestWrongExtension() throws IOException {
+        String wrong = "src/test/resources/blabla.md";
+        try {
+            Differ.generate(json1, wrong, "stylish");
+            Assertions.fail("Exception was not thrown");
+        } catch (RuntimeException ignored) {
+        }
     }
 }
