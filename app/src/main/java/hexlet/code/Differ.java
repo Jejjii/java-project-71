@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-public class Differ {
+public class Differ { //aboba
     public static String generate(String path1, String path2) throws IOException {
         String data1 = getData(path1);
         String data2 = getData(path2);
