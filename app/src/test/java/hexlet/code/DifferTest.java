@@ -28,7 +28,7 @@ public class DifferTest {
 
     @ParameterizedTest
     @ValueSource(strings = {"json", "yaml", "yml"})
-    void diffTest(String fileType) throws IOException {
+    final void diffTest(String fileType) throws IOException {
         String filePath1 = buildCommonPath(fileType) + "1." + fileType;
         String filePath2 = buildCommonPath(fileType) + "2." + fileType;
 
