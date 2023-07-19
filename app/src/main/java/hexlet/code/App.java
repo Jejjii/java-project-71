@@ -10,11 +10,6 @@ import java.util.concurrent.Callable;
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
         description = "Compares two configuration files and shows a difference.")
 public final class App implements Callable<Integer> {
-    @Option(names = {"-h", "--help"}, usageHelp = true, description = "Show this help message and exit.")
-    private boolean helpRequested;
-
-    @Option(names = {"-V", "--version"}, versionHelp = true, description = "Print version information and exit.")
-    private boolean versionRequested;
 
     @Option(names = {"-f", "--format"}, defaultValue = "stylish", paramLabel = "format",
             description = "output format [default: stylish]")

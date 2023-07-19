@@ -11,30 +11,19 @@ public final class PlainFormatter implements Formatter {
         for (String key : data.keySet()) {
             Map<String, Object> elementInfo = data.get(key);
             if (elementInfo.get("status").equals("added")) {
-                result.append(infoAdded(key, elementInfo.get("value")));
+                result.append(String.format("Property '%s' was added with value: %s\n",
+                        key, valueFormatted(elementInfo.get("value"))));
             } else if (elementInfo.get("status").equals("deleted")) {
-                result.append(infoDeleted(key));
+                result.append(String.format("Property '%s' was removed\n", key));
             } else if (elementInfo.get("status").equals("changed")) {
-                result.append(infoChanged(key, elementInfo.get("oldValue"), elementInfo.get("newValue")));
+                result.append(String.format("Property '%s' was updated. From %s to %s\n",
+                        key, valueFormatted(elementInfo.get("oldValue")), valueFormatted(elementInfo.get("newValue"))));
             }
         }
         if (result.length() > 0) {
             result.setLength(result.length() - 1); //deleting \n symbol
         }
         return result.toString();
-    }
-
-    private static String infoDeleted(String key) {
-        return String.format("Property '%s' was removed\n", key);
-    }
-
-    private static String infoChanged(String key, Object oldValue, Object newValue) {
-        return String.format("Property '%s' was updated. From %s to %s\n",
-                key, valueFormatted(oldValue), valueFormatted(newValue));
-    }
-
-    private static String infoAdded(String key, Object value) {
-        return String.format("Property '%s' was added with value: %s\n", key, valueFormatted(value));
     }
 
     private static String valueFormatted(Object value) {

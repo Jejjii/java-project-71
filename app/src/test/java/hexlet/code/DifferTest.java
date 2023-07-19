@@ -21,9 +21,9 @@ public class DifferTest {
 
     @BeforeAll
     public static void generate() throws IOException {
-        stylishResult = getData("src/test/resources/fixtures/results/stylish.md");
-        plainResult = getData("src/test/resources/fixtures/results/plain.md");
-        jsonResult = getData("src/test/resources/fixtures/results/json.md");
+        stylishResult = getData("src/test/resources/fixtures/results/stylish.txt");
+        plainResult = getData("src/test/resources/fixtures/results/plain.txt");
+        jsonResult = getData("src/test/resources/fixtures/results/json.txt");
     }
 
     @ParameterizedTest
