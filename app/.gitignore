@@ -40,3 +40,13 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+app/build
+/app/build
+/app/.gradle/
+/app/out/
+.gradle/
+.idea/
+app/gradle-wrapper.jar
+/app/gradle-wrapper.properties
+/build/
