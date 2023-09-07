@@ -30,3 +30,4 @@ public final class Diff {
         this.val2 = val2In;
     }
 }
+

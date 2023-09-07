@@ -71,3 +71,4 @@ public class Differ {
         return extension;
     }
 }
+
