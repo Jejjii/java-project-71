@@ -1,6 +1,9 @@
 plugins {
-    id 'java'
+    id 'com.github.ben-manes.versions' version '0.39.0'
     id 'application'
+    id 'checkstyle'
+    id 'jacoco'
+    id 'com.adarshr.test-logger' version '3.0.0'
 }
 
 group = 'hexlet.code'
@@ -13,10 +16,14 @@ repositories {
 dependencies {
     testImplementation platform('org.junit:junit-bom:5.9.2')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-}
-
-test {
-    useJUnitPlatform()
+    implementation 'info.picocli:picocli:4.7.4'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+    implementation 'org.json:json:20210307'
+    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.8'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.4'
 }
 
 application {
@@ -25,4 +32,25 @@ application {
 
 compileJava {
     options.release = 20
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}
+
+checkstyle {
+    toolVersion = '9.0'
+}
+
+checkstyleMain {
+    // Настройки для задачи checkstyleMain (для исходного кода в src/main)
+    source = fileTree('src/main')
+    include '**/*.java'
+}
+
+checkstyleTest {
+    // Настройки для задачи checkstyleTest (для исходного кода в src/test)
+    source = fileTree('src/test')
+    include '**/*.java'
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
