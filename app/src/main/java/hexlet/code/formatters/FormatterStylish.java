@@ -1,4 +1,4 @@
-package hexlet.code.formatters;
+/*package hexlet.code.formatters;
 
 import hexlet.code.Diff;
 import java.util.List;
@@ -43,3 +43,4 @@ public class FormatterStylish {
         return (stringBuilder.toString());
     }
 }
+ */

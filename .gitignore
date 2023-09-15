@@ -5,11 +5,8 @@ build/
 !**/src/test/**/build/
 
 ### IntelliJ IDEA ###
-.idea
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
+.idea/
+
 *.iws
 *.iml
 *.ipr
@@ -51,3 +48,11 @@ app/build
 app/gradle-wrapper.jar
 /app/gradle-wrapper.properties
 /build/
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+
+out
+.idea

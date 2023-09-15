@@ -35,22 +35,6 @@ compileJava {
     options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
-checkstyle {
-    toolVersion = '9.0'
-}
-
-checkstyleMain {
-    // Настройки для задачи checkstyleMain (для исходного кода в src/main)
-    source = fileTree('src/main')
-    include '**/*.java'
-}
-
-checkstyleTest {
-    // Настройки для задачи checkstyleTest (для исходного кода в src/test)
-    source = fileTree('src/test')
-    include '**/*.java'
-}
-
 tasks.test {
     useJUnitPlatform()
 }

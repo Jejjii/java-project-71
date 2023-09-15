@@ -1,33 +1,22 @@
 package hexlet.code;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class Diff {
-    private final String key;
-    private final String action;
-    private final Object val1;
-    private final Object val2;
+    private final Map<String, Object> changes;
 
-    public String getAction() {
-        return this.action;
+    public Diff() {
+        this.changes = new HashMap<>();
     }
 
-    public String getKey() {
-        return this.key;
+    public void addChange(String key, Object value) {
+        changes.put(key, value);
     }
 
-    public Object getVal1() {
-        return this.val1;
-    }
-
-    public Object getVal2() {
-        return this.val2;
-    }
-
-    public Diff(String keyIn, String actionIn, Object val1In, Object val2In) {
-        this.key = keyIn;
-        this.action = actionIn;
-        this.val1 = val1In;
-        this.val2 = val2In;
+    public List<Map.Entry<String, Object>> getChanges() {
+        return new ArrayList<>(changes.entrySet());
     }
 }
-
