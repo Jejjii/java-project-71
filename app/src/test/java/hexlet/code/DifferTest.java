@@ -1,128 +1,67 @@
 package hexlet.code;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class DifferTest {
 
-    @Test
-    public void testDifferfile1andfile2() throws IOException {
-        String expected = """
-                {
-                  - follow: false
-                    host: hexlet.io
-                  - proxy: 123.234.53.22
-                  - timeout: 50
-                  + timeout: 20
-                  + verbose: true
-                }""";
-        String actual = Differ.generate(getFullPath("file1.json"), getFullPath("file2.json"), "stylish");
-        assertEquals(expected, actual);
+    private static String stylishResult;
+    private static String plainResult;
+    private static String jsonResult;
+
+    @BeforeAll
+    public static void generate() throws IOException {
+        stylishResult = getData("src/test/resources/fixtures/results/stylish.txt");
+        plainResult = getData("src/test/resources/fixtures/results/plain.txt");
+        jsonResult = getData("src/test/resources/fixtures/results/json.txt");
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"json", "yaml", "yml"})
+    final void diffTest(String fileType) throws IOException {
+        String filePath1 = buildCommonPath(fileType) + "1." + fileType;
+        String filePath2 = buildCommonPath(fileType) + "2." + fileType;
+
+        assertThat(Differ.generate(filePath1, filePath2)).isEqualTo(stylishResult);
+        assertThat(Differ.generate(filePath1, filePath2, "stylish")).isEqualTo(stylishResult);
+        assertThat(Differ.generate(filePath1, filePath2, "plain")).isEqualTo(plainResult);
+        assertThat(Differ.generate(filePath1, filePath2, "json")).isEqualTo(jsonResult);
+    }
+
+    private static String getData(String path) throws IOException {
+        return new String(Files.readAllBytes(Paths.get(path)));
+    }
+
+    private static String buildCommonPath(String fileName) {
+        return "src/test/resources/fixtures/" + fileName;
     }
 
     @Test
-    public void testDifferfile1andfile1() throws IOException {
-        String expected = """
-                {
-                    follow: false
-                    host: hexlet.io
-                    proxy: 123.234.53.22
-                    timeout: 50
-                }""";
-        String actual = Differ.generate(getFullPath("file1.json"), getFullPath("file1.json"), "stylish");
-        assertEquals(expected, actual);
+    void diffTestDiffExtensions() throws IOException {
+        String filePath1 = buildCommonPath("json") + "1." + "json";
+        String filePath2 = buildCommonPath("yaml") + "2." + "yaml";
+        assertThat(Differ.generate(filePath1, filePath2)).isEqualTo(stylishResult);
     }
 
     @Test
-    public void testDifferYMLFile1andFile2() throws IOException {
-        String expected = """
-                {
-                  - follow: false
-                    host: hexlet.io
-                  - proxy: 123.234.53.22
-                  - timeout: 50
-                  + timeout: 20
-                  + verbose: true
-                }""";
-        String actual;
-        actual = Differ.generate(getFullPath("fileYML1.yml"), getFullPath("fileYML2.yml"), "stylish");
-        assertEquals(expected, actual);
-    }
+    void diffTestWrongExtension() {
+        String filePath1 = buildCommonPath("json") + "1." + "json";
+        String filePath2 = buildCommonPath("wrongextension.md");
 
-    @Test
-    public void testDifferYMLFile1andFile1() throws IOException {
-        String expected = """
-                {
-                    follow: false
-                    host: hexlet.io
-                    proxy: 123.234.53.22
-                    timeout: 50
-                }""";
-        String actual;
-        actual = Differ.generate(getFullPath("fileYML1.yml"), getFullPath("fileYML1.yml"), "stylish");
-        assertEquals(expected, actual);
-    }
+        assertThatThrownBy(() -> {
+            Differ.generate(filePath1, filePath2);
+        }).isInstanceOf(RuntimeException.class)
+                .hasMessageMatching("Unsupported extension");
 
-    @Test
-    public void testDifferBigFile1andFile2() throws IOException {
-        String expected = Files.readString(Paths.get(getFullPath("stylishExpect.txt")));
-        String actual;
-        actual = Differ.generate(getFullPath("file1Big.json"), getFullPath("file2Big.json"), "stylish");
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testDifferYMLBigFile1andFile2() throws IOException {
-        String expected = Files.readString(Paths.get(getFullPath("stylishExpect.txt")));
-        String actual;
-        actual = Differ.generate(getFullPath("file1BigYML.yml"), getFullPath("file2BigYML.yml"), "stylish");
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testDifferYMLBigFile1andFile2NoFormat() throws IOException {
-        String expected = Files.readString(Paths.get(getFullPath("stylishExpect.txt")));
-        String actual;
-        actual = Differ.generate(getFullPath("file1BigYML.yml"), getFullPath("file2BigYML.yml"));
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testDifferPlainBigFile1andFile2() throws IOException {
-        String expected = """
-                Property 'chars2' was updated. From [complex value] to false
-                Property 'checked' was updated. From false to true
-                Property 'default' was updated. From null to [complex value]
-                Property 'id' was updated. From 45 to null
-                Property 'key1' was removed
-                Property 'key2' was added with value: 'value2'
-                Property 'numbers2' was updated. From [complex value] to [complex value]
-                Property 'numbers3' was removed
-                Property 'numbers4' was added with value: [complex value]
-                Property 'obj1' was added with value: [complex value]
-                Property 'setting1' was updated. From 'Some value' to 'Another value'
-                Property 'setting2' was updated. From 200 to 300
-                Property 'setting3' was updated. From true to 'none'""";
-        String actual;
-        actual = Differ.generate(getFullPath("file1Big.json"), getFullPath("file2Big.json"), "plain");
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testDifferJSONBigFile1andFile2() throws IOException {
-
-        String expected = Files.readString(Paths.get(getFullPath("JsonExpect.json")));
-        String actual;
-        actual = Differ.generate(getFullPath("file1Big.json"), getFullPath("file2Big.json"), "json");
-        assertEquals(expected, actual);
-    }
-
-    public static String getFullPath(String fileName) {
-        return "src/test/resources/" + fileName;
     }
 }

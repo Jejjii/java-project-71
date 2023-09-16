@@ -1,9 +1,7 @@
 plugins {
-    id 'com.github.ben-manes.versions' version '0.39.0'
     id 'application'
     id 'checkstyle'
     id 'jacoco'
-    id 'com.adarshr.test-logger' version '3.0.0'
 }
 
 group = 'hexlet.code'
@@ -13,28 +11,38 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation platform('org.junit:junit-bom:5.9.2')
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
-    implementation 'info.picocli:picocli:4.7.4'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
-    implementation 'org.json:json:20210307'
-    implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.9.8'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.5'
-    annotationProcessor 'info.picocli:picocli-codegen:4.7.4'
-}
-
-application {
-    mainClassName = 'hexlet.code.App'
-}
-
 compileJava {
-    options.release = 20
+    options.release = 17
     options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
 }
 
-tasks.test {
+
+application {
+    mainClass = 'hexlet.code.App'
+}
+
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+    }
+}
+
+dependencies {
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2'
+    implementation 'info.picocli:picocli:4.7.3'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.3'
+    testImplementation platform('org.junit:junit-bom:5.9.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+    testImplementation 'org.assertj:assertj-core:3.19.0'
+}
+
+test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }

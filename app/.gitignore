@@ -6,7 +6,6 @@ build/
 
 ### IntelliJ IDEA ###
 .idea/
-
 *.iws
 *.iml
 *.ipr
@@ -38,21 +37,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-
-sdf/build
-/sdf/build
-/sdf/.gradle/
-/sdf/out/
-.gradle/
-.idea/
-sdf/gradle-wrapper.jar
-/sdf/gradle-wrapper.properties
-/build/
-# Ignore Gradle project-specific cache directory
-.gradle
-
-# Ignore Gradle build output directory
-build
-
-out
-.idea

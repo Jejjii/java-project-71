@@ -1,21 +1,25 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import java.io.IOException;
 import java.util.Map;
-import java.util.TreeMap;
 
 public class Parser {
-    public static Map<String, Object> parseInMap(String format, String contexString) throws IOException {
+
+    public static Map<String, Object> parseData(String extension, String data) throws JsonProcessingException {
         ObjectMapper mapper;
-        if (format.equals("yml")) {
-            mapper = new ObjectMapper(new YAMLFactory());
+        if (extension.equals("json")) {
+            mapper = new JsonMapper();
+        } else if (extension.equals("yaml") || extension.equals("yml")) {
+            mapper = new YAMLMapper();
         } else {
-            mapper = new ObjectMapper();
+            throw new RuntimeException("Unsupported extension");
         }
-        return mapper.readValue(contexString, TreeMap.class);
+
+        return mapper.readValue(data, new TypeReference<>() { });
     }
 }
-
