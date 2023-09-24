@@ -21,14 +21,14 @@ public class DifferTest {
 
     @BeforeAll
     public static void generate() throws IOException {
-        stylishResult = getData("src/test/resources/fixtures/results/stylish.txt");
-        plainResult = getData("src/test/resources/fixtures/results/plain.txt");
-        jsonResult = getData("src/test/resources/fixtures/results/json.txt");
+        stylishResult = getData(buildCommonPath("results/stylish.txt"));
+        plainResult = getData(buildCommonPath("results/plain.txt"));
+        jsonResult = getData(buildCommonPath("results/json.txt"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"json", "yaml", "yml"})
-    final void diffTest(String fileType) throws IOException {
+    public final void diffTest(String fileType) throws IOException {
         String filePath1 = buildCommonPath(fileType) + "1." + fileType;
         String filePath2 = buildCommonPath(fileType) + "2." + fileType;
 
@@ -47,14 +47,14 @@ public class DifferTest {
     }
 
     @Test
-    void diffTestDiffExtensions() throws IOException {
+    public void diffTestDiffExtensions() throws IOException {
         String filePath1 = buildCommonPath("json") + "1." + "json";
         String filePath2 = buildCommonPath("yaml") + "2." + "yaml";
         assertThat(Differ.generate(filePath1, filePath2)).isEqualTo(stylishResult);
     }
 
     @Test
-    void diffTestWrongExtension() {
+    public void diffTestWrongExtension() {
         String filePath1 = buildCommonPath("json") + "1." + "json";
         String filePath2 = buildCommonPath("wrongextension.md");
 
@@ -62,6 +62,5 @@ public class DifferTest {
             Differ.generate(filePath1, filePath2);
         }).isInstanceOf(RuntimeException.class)
                 .hasMessageMatching("Unsupported extension");
-
     }
 }

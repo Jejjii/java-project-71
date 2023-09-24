@@ -17,7 +17,7 @@ public final class PlainFormatter implements Formatter {
                 result.append(String.format("Property '%s' was removed\n", key));
             } else if (elementInfo.get("status").equals("changed")) {
                 result.append(String.format("Property '%s' was updated. From %s to %s\n",
-                        key, valueFormatted(elementInfo.get("oldValue")), valueFormatted(elementInfo.get("newValue"))));
+                        key, valueFormatted(elementInfo.get("value1")), valueFormatted(elementInfo.get("value2"))));
             }
         }
         if (result.length() > 0) {
@@ -28,7 +28,7 @@ public final class PlainFormatter implements Formatter {
 
     private static String valueFormatted(Object value) {
         if (value == null) {
-            return String.valueOf((Object) null);
+            return "null";
         }
         if (value instanceof List<?> || value instanceof Map<?, ?>) {
             return "[complex value]";

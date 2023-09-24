@@ -5,23 +5,23 @@
   },
   "chars2" : {
     "status" : "changed",
-    "oldValue" : [ "d", "e", "f" ],
-    "newValue" : false
+    "value1" : [ "d", "e", "f" ],
+    "value2" : false
   },
   "checked" : {
     "status" : "changed",
-    "oldValue" : false,
-    "newValue" : true
+    "value1" : false,
+    "value2" : true
   },
   "default" : {
     "status" : "changed",
-    "oldValue" : null,
-    "newValue" : [ "value1", "value2" ]
+    "value1" : null,
+    "value2" : [ "value1", "value2" ]
   },
   "id" : {
     "status" : "changed",
-    "oldValue" : 45,
-    "newValue" : null
+    "value1" : 45,
+    "value2" : null
   },
   "key1" : {
     "status" : "deleted",
@@ -37,8 +37,8 @@
   },
   "numbers2" : {
     "status" : "changed",
-    "oldValue" : [ 2, 3, 4, 5 ],
-    "newValue" : [ 22, 33, 44, 55 ]
+    "value1" : [ 2, 3, 4, 5 ],
+    "value2" : [ 22, 33, 44, 55 ]
   },
   "numbers3" : {
     "status" : "deleted",
@@ -57,17 +57,17 @@
   },
   "setting1" : {
     "status" : "changed",
-    "oldValue" : "Some value",
-    "newValue" : "Another value"
+    "value1" : "Some value",
+    "value2" : "Another value"
   },
   "setting2" : {
     "status" : "changed",
-    "oldValue" : 200,
-    "newValue" : 300
+    "value1" : 200,
+    "value2" : 300
   },
   "setting3" : {
     "status" : "changed",
-    "oldValue" : true,
-    "newValue" : "none"
+    "value1" : true,
+    "value2" : "none"
   }
 }

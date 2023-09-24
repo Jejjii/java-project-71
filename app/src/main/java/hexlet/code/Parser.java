@@ -23,3 +23,4 @@ public class Parser {
         return mapper.readValue(data, new TypeReference<>() { });
     }
 }
+

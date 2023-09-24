@@ -15,8 +15,8 @@ public final class StylishFormatter implements Formatter {
             } else if (elementInfo.get("status").equals("deleted")) {
                 result.append("  - ").append(key).append(": ").append(elementInfo.get("value")).append("\n");
             } else if (elementInfo.get("status").equals("changed")) {
-                result.append("  - ").append(key).append(": ").append(elementInfo.get("oldValue")).append("\n");
-                result.append("  + ").append(key).append(": ").append(elementInfo.get("newValue")).append("\n");
+                result.append("  - ").append(key).append(": ").append(elementInfo.get("value1")).append("\n");
+                result.append("  + ").append(key).append(": ").append(elementInfo.get("value2")).append("\n");
             } else {
                 result.append("    ").append(key).append(": ").append(elementInfo.get("value")).append("\n");
             }

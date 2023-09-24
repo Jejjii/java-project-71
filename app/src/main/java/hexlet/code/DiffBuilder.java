@@ -25,8 +25,8 @@ public class DiffBuilder {
                 elementInfo.put("value", map1.get(key));
             } else if (!Objects.equals(map1.get(key), map2.get(key))) {
                 elementInfo.put("status", "changed");
-                elementInfo.put("oldValue", map1.get(key));
-                elementInfo.put("newValue", map2.get(key));
+                elementInfo.put("value1", map1.get(key));
+                elementInfo.put("value2", map2.get(key));
             } else {
                 elementInfo.put("status", "same");
                 elementInfo.put("value", map1.get(key));
@@ -36,3 +36,4 @@ public class DiffBuilder {
         return result;
     }
 }
+

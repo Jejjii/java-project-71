@@ -22,3 +22,4 @@ public interface Formatter {
 
     String format(TreeMap<String, Map<String, Object>> data);
 }
+
