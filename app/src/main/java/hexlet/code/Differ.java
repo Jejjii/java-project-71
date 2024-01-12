@@ -1,35 +1,41 @@
 package hexlet.code;
 
-import hexlet.code.Formatters.Formatter;
-
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
+
+import static hexlet.code.Parser.getDataStructureFromFile;
 
 public class Differ {
-    public static String generate(String path1, String path2, String style) throws IOException {
-        String data1 = getData(path1);
-        String data2 = getData(path2);
 
-        Map<String, Object> dataMap1 = Parser.parseData(getExtension(path1), data1);
-        Map<String, Object> dataMap2 = Parser.parseData(getExtension(path2), data2);
-
-        TreeMap<String, Map<String, Object>> difference = DiffBuilder.getDifference(dataMap1, dataMap2);
-        return Formatter.createFormatter(style).format(difference);
+    private static String readStringFromFile(String fileNameOrFullPath) throws IOException {
+        Path absolutePath = Paths.get(fileNameOrFullPath).toAbsolutePath().normalize();
+        return Files.readString(absolutePath);
     }
 
-    public static String generate(String path1, String path2) throws IOException {
-        return generate(path1, path2, "stylish");
+    private static String getFormatName(String filePath) {
+        String[] extArray = filePath.split("\\.");
+        if (extArray.length > 0) {
+            return extArray[extArray.length - 1];
+        } else {
+            return "";
+        }
     }
 
-    private static String getData(String path) throws IOException {
-        return new String(Files.readAllBytes(Paths.get(path)));
+    public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
+        Map<String, Object> treeMap1 = getDataStructureFromFile(readStringFromFile(filePath1),
+                getFormatName(filePath1));
+        Map<String, Object> treeMap2 = getDataStructureFromFile(readStringFromFile(filePath2),
+                getFormatName(filePath2));
+
+        List<Map<String, Object>> treeMapsDifferences = Diff.getTreeMapsDifferencesList(treeMap1, treeMap2);
+        return Formatter.getFormattedString(treeMapsDifferences, formatName);
     }
 
-    private static String getExtension(String path) {
-        String[] temp = path.split("\\.");
-        return temp[temp.length - 1];
+    public static String generate(String filePath1, String filePath2) throws IOException {
+        return generate(filePath1, filePath2, "stylish");
     }
 }

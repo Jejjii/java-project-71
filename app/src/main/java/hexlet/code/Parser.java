@@ -1,25 +1,30 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class Parser {
 
-    public static Map<String, Object> parseData(String extension, String data) throws JsonProcessingException {
-        ObjectMapper mapper;
-        if (extension.equals("json")) {
-            mapper = new JsonMapper();
-        } else if (extension.equals("yaml") || extension.equals("yml")) {
+    private static ObjectMapper getObjectMapper(String formatName) {
+        ObjectMapper mapper = null;
+        if (formatName.endsWith("json")) {
+            mapper = new ObjectMapper();
+        } else if (formatName.endsWith("yml") || formatName.endsWith("yaml")) {
             mapper = new YAMLMapper();
         } else {
-            throw new RuntimeException("Unsupported extension");
+            throw new IllegalArgumentException("Illegal format: " + formatName);
         }
-
-        return mapper.readValue(data, new TypeReference<>() { });
+        return mapper;
     }
+
+    public static Map<String, Object> getDataStructureFromFile(String strFromFile,
+                                                               String formatName) throws IOException {
+        ObjectMapper mapper = getObjectMapper(formatName);
+        return mapper.readValue(strFromFile, new TypeReference<>() { });
+    }
+
 }

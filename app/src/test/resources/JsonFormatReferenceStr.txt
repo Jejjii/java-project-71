@@ -1,0 +1,17 @@
+[
+{"key":"chars1","Difference":"notChanged","value":["a","b","c"]},
+{"key":"chars2","Difference":"updated","file1Value":["d","e","f"],"file2Value":false},
+{"key":"checked","Difference":"updated","file1Value":false,"file2Value":true},
+{"key":"default","Difference":"updated","file1Value":null,"file2Value":["value1","value2"]},
+{"key":"id","Difference":"updated","file1Value":45,"file2Value":null},
+{"key":"key1","Difference":"removed","value":"value1"},
+{"key":"key2","Difference":"added","value":"value2"},
+{"key":"numbers1","Difference":"notChanged","value":[1,2,3,4]},
+{"key":"numbers2","Difference":"updated","file1Value":[2,3,4,5],"file2Value":[22,33,44,55]},
+{"key":"numbers3","Difference":"removed","value":[3,4,5]},
+{"key":"numbers4","Difference":"added","value":[4,5,6]},
+{"key":"obj1","Difference":"added","value":{"nestedKey":"value","isNested":true}},
+{"key":"setting1","Difference":"updated","file1Value":"Some value","file2Value":"Another value"},
+{"key":"setting2","Difference":"updated","file1Value":200,"file2Value":300},
+{"key":"setting3","Difference":"updated","file1Value":true,"file2Value":"none"}
+]
